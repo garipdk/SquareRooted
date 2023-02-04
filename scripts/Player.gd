@@ -4,7 +4,7 @@ export (int) var max_speed = 500
 export (int) var acceleration = 750
 export (int) var roll_speed = 600
 export (int) var friction = 2000
-export (int) var max_speed_knockback = 1.2
+export (float) var max_speed_knockback = 1.2
 export (int) var friction_knockback = 1000
 export (float) var cooldown = 3.0
 var velocity = Vector2.ZERO
@@ -72,7 +72,7 @@ func move_state(delta):
 	if Input.is_action_pressed("attack"):
 		state = ATTACK
 	if health <= 0:
-		get_tree().change_scene("res://scenes/Death.tscn")
+		GameState._unused_warning = get_tree().change_scene("res://scenes/Death.tscn")
 	
 func knockback_state(delta):
 	
@@ -105,7 +105,7 @@ func roll_state(_delta):
 	move()
 
 func _on_Hurtbox_area_entered(area):
-	move_and_slide(Vector2.ZERO)
+	GameState._unused_warning = move_and_slide(Vector2.ZERO)
 	state = KNOCKBACK
 	knockback = area.knockback_vector * max_speed_knockback
 	is_attacked = true

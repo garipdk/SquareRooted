@@ -5,7 +5,7 @@ onready var player = get_node("/root/Level1/YSort/Player")
 # var a = 2
 # var b = "text"
 
-
+var _unused_warning
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
