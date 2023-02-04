@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Enemy1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Level1.gd" type="Script" id=3]
 [ext_resource path="res://assets/Fond.PNG" type="Texture" id=4]
 
@@ -23,33 +24,48 @@ script = ExtResource( 3 )
 texture = ExtResource( 4 )
 centered = false
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 608, 186 )
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Player" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 427, 329 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="BordHaut" type="StaticBody2D" parent="."]
+[node name="BordHaut" type="StaticBody2D" parent="YSort"]
 position = Vector2( 13, -40 )
+collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BordHaut"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordHaut"]
 position = Vector2( 627, 145.5 )
 shape = SubResource( 2 )
 
-[node name="BordBas" type="StaticBody2D" parent="."]
+[node name="BordBas" type="StaticBody2D" parent="YSort"]
+collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BordBas"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordBas"]
 position = Vector2( 641.5, 643.5 )
 shape = SubResource( 3 )
 
-[node name="BordGauche" type="StaticBody2D" parent="."]
+[node name="BordGauche" type="StaticBody2D" parent="YSort"]
+collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BordGauche"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordGauche"]
 position = Vector2( 121.75, 374.5 )
 shape = SubResource( 4 )
 
-[node name="BordDroite" type="StaticBody2D" parent="."]
+[node name="BordDroite" type="StaticBody2D" parent="YSort"]
+collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BordDroite"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordDroite"]
 position = Vector2( 1137.5, 371 )
 shape = SubResource( 5 )
+
+[node name="Enemy1" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 920, 394 )
+scale = Vector2( 0.7, 0.7 )
+max_speed = null
+max_speed_knockback = null
+acceleration = null
+friction = null
+friction_knockback = null
