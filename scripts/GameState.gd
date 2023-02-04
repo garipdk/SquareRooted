@@ -1,6 +1,6 @@
 extends Node2D
 
-
+onready var player = get_node("/root/Level1/YSort/Player")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

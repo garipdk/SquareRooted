@@ -110,5 +110,9 @@ func _on_Hurtbox_area_entered(area):
 	knockback = area.knockback_vector * max_speed_knockback
 	is_attacked = true
 
+func launch_atack_sound():
+	Fmod.play_one_shot_attached("event:/SFX/Character/SFX_Sword", self)
+	
+
 func _on_Hurtbox_area_exited(_area):
 	is_attacked = false

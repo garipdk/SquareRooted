@@ -41,6 +41,7 @@ config/icon="res://icon.png"
 Fmod="*res://addons/fmod/Fmod.tscn"
 FmodInit="*res://scripts/FmodInit.gd"
 Skipp_Fmod_Errors="*res://scripts/Skipp_Fmod_Errors.gd"
+GameState="*res://scenes/GameState.tscn"
 
 [display]
 
