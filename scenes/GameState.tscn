@@ -2,5 +2,5 @@
 
 [ext_resource path="res://scripts/GameState.gd" type="Script" id=1]
 
-[node name="GameSate" type="Node2D"]
+[node name="GameSate" type="Control"]
 script = ExtResource( 1 )

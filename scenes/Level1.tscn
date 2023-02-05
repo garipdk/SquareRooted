@@ -1,11 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/Enemy1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/Level1.gd" type="Script" id=3]
 [ext_resource path="res://assets/Fond.PNG" type="Texture" id=4]
-[ext_resource path="res://scenes/Enemy3.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/Projectile.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/Spawner.gd" type="Script" id=6]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 640, 104.5 )
@@ -14,10 +12,10 @@ extents = Vector2( 640, 104.5 )
 extents = Vector2( 638.5, 77.5 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 123.25, 258.5 )
+extents = Vector2( 123.25, 178 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 140.5, 263.5 )
+extents = Vector2( 140.5, 178 )
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 3 )
@@ -29,47 +27,47 @@ centered = false
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 360, 278 )
+position = Vector2( 385, 448 )
+
+[node name="BordHaut" type="StaticBody2D" parent="YSort"]
+position = Vector2( 641, 106 )
+collision_mask = 0
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="BordHaut" type="StaticBody2D" parent="YSort"]
-position = Vector2( 13, -40 )
-collision_mask = 0
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordHaut"]
-position = Vector2( 627, 145.5 )
 shape = SubResource( 2 )
 
 [node name="BordBas" type="StaticBody2D" parent="YSort"]
+position = Vector2( 640, 645 )
 collision_mask = 0
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordBas"]
-position = Vector2( 641.5, 643.5 )
 shape = SubResource( 3 )
 
 [node name="BordGauche" type="StaticBody2D" parent="YSort"]
+position = Vector2( 125, 389 )
 collision_mask = 0
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordGauche"]
-position = Vector2( 121.75, 374.5 )
 shape = SubResource( 4 )
 
 [node name="BordDroite" type="StaticBody2D" parent="YSort"]
+position = Vector2( 1137, 389 )
 collision_mask = 0
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/BordDroite"]
-position = Vector2( 1137.5, 371 )
 shape = SubResource( 5 )
 
-[node name="Enemy1" parent="YSort" instance=ExtResource( 2 )]
-position = Vector2( 920, 394 )
-scale = Vector2( 0.7, 0.7 )
-
-[node name="Enemy3" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 934, 233 )
-scale = Vector2( 0.7, 0.7 )
-
-[node name="Projectile" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 131, 174 )
+[node name="Spawner" type="Node2D" parent="YSort"]
+script = ExtResource( 6 )
