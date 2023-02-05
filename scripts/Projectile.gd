@@ -16,7 +16,7 @@ func _ready():
 func _process(delta):
 	velocity = move_and_slide(velocity * speed)
 
-func _init(p,v,s):
+func init(p,v,s):
 	global_position = p
 	velocity = v.normalized()
 	speed = s

@@ -3,13 +3,17 @@ var new_num
 var pos
 var cooldown = 1.0
 var spawning = false
+onready var missile = preload("res://scenes/Skipp_Fmod_Errors.tscn")
 func spawner(num, pos0, sc):
 	var spawning0 = GameState.scenes[num].instance()
 	spawning0.position = pos0
 	spawning0.scale = Vector2(sc, sc)
-	print(spawning0)
 	add_child(spawning0)
 
+func spawner_missil(p, v, s):
+	var spawning0 = missile.instance()
+	spawning0.init(p,v,s)
+	add_child(spawning0)
 func fusion_area_entered(itself, area_in):
 	var area = area_in.get_parent()
 	if area.is_hited:

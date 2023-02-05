@@ -80,7 +80,7 @@ func _physics_process(delta):
 		is_hited = false
 
 func _on_Hurtbox_area_entered(area):
-	GameState._unused_warning = move_and_slide(Vector2.ZERO)
+	GameState._unused_warning = move(Vector2.ZERO)
 	knockback = area.knockback_vector * max_speed_knockback
 	is_attacked = true
 
