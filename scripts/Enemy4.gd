@@ -36,6 +36,8 @@ func _physics_process(delta):
 		cooldown_h = cooldown_hit
 	else:
 		cooldown_h -= delta
+	if health <= 0:
+		queue_free()
 	if colision_info or velocity == Vector2.ZERO:
 		start_cooldown = true
 	if start_cooldown and input_vector != Vector2.ZERO:
