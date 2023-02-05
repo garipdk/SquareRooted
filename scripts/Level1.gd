@@ -20,23 +20,33 @@ func bounce(area, direction):
 	area.velocity = area.velocity.reflect(direction * area.velocity)
 
 func _on_BordHaut_area_entered(area):
+	if area.get_parent().type == "enemi":
+		print("enemi bounce")
 	var direction = Vector2.DOWN
 	bounce(area, direction)
 	pass # Replace with function body.
 
 func _on_BordBas_area_entered(area):
+	if area.get_parent().type == "enemi":
+		print("enemi bounce")
 	var direction = Vector2.UP
 	bounce(area, direction)
 	pass # Replace with function body.
 
 
 func _on_BordGauche_area_entered(area):
+	if area.get_parent().type == "enemi":
+		print("enemi bounce")
+	else:
+		print("")
 	var direction = Vector2.RIGHT
 	bounce(area, direction)
 	pass # Replace with function body.
 
 
 func _on_BordDroite_area_entered(area):
+	if area.get_parent().type == "enemi":
+		print("enemi bounce")
 	var direction = Vector2.LEFT
 	bounce(area, direction)
 	pass # Replace with function body.

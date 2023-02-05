@@ -9,6 +9,8 @@ export (int) var friction_knockback = 20
 export (float) var cooldown_hit = 3.0
 var cooldown_h = cooldown_hit
 var roll_vector = Vector2.LEFT
+var type = "player"
+
 enum {
 	MOVE,
 	ROLL,
@@ -104,10 +106,14 @@ func roll_state(_delta):
 	velocity = move(velocity)
 
 func _on_Hurtbox_area_entered(area):
-	GameState._unused_warning = move_and_slide(Vector2.ZERO)
-	state = KNOCKBACK
-	knockback = area.knockback_vector * max_speed_knockback
-	is_attacked = true
+	if area.get_parent().type == "enemi":
+		GameState._unused_warning = move_and_slide(Vector2.ZERO)
+		state = KNOCKBACK
+		knockback = area.knockback_vector * max_speed_knockback
+		is_attacked = true
+	elif area.get_parent().type == "projectile":
+		is_attacked = true
+		area.get_parent().queue_free()
 
 func launch_atack_sound():
 	Fmod.play_one_shot_attached("event:/SFX/Character/SFX_Sword", self)

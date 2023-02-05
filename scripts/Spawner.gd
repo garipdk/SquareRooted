@@ -3,7 +3,8 @@ var new_num
 var pos
 var cooldown = 1.0
 var spawning = false
-onready var missile = preload("res://scenes/Skipp_Fmod_Errors.tscn")
+onready var missile = preload("res://scenes/Projectile.tscn")
+
 func spawner(num, pos0, sc):
 	var spawning0 = GameState.scenes[num].instance()
 	spawning0.position = pos0

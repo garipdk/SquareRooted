@@ -21,9 +21,9 @@ var currentDirection = Vector2.ZERO
 onready var collisionshape2d = $CollisionShape2D
 var isready = false
 
-var reloadTime = 3.0
+var reloadTime = 2.0
 var reloading = reloadTime
-var aimingTime = 0.5
+var aimingTime = 0.1
 var aiming = aimingTime
 
 func _ready():
@@ -75,9 +75,9 @@ func _physics_process(delta):
 			animationState.travel("Run_en1")
 			
 			# Tirer
-			if reloading == 0:
+			if reloading <= 0:
 				aiming -= delta
-			if aiming == 0:
+			if aiming <= 0:
 				shot()
 				reloading = reloadTime
 				aiming = aimingTime
@@ -101,7 +101,7 @@ func deactivate_movement():
 
 func shot():
 	var directionDuTir = player.global_position - global_position
-	spawner.spawner_missil(global_position,directionDuTir,10)
+	spawner.spawner_missil(global_position,directionDuTir,2.5)
 
 func get_node_type():
 	return GameState.Enemy3
