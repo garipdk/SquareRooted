@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "BaseLiveObjects",
+"language": "GDScript",
+"path": "res://scripts/BaseLiveObjects.gd"
+}, {
+"base": "BaseLiveObjects",
+"class": "Enemies",
+"language": "GDScript",
+"path": "res://scripts/Enmies.gd"
+}, {
 "base": "VBoxContainer",
 "class": "FMOD_Config",
 "language": "GDScript",
@@ -23,11 +33,19 @@ _global_script_classes=[ {
 "class": "FmodNative",
 "language": "NativeScript",
 "path": "res://addons/fmod/Fmod.gdns"
+}, {
+"base": "BaseLiveObjects",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
 } ]
 _global_script_class_icons={
+"BaseLiveObjects": "",
+"Enemies": "",
 "FMOD_Config": "",
 "FmodEventEmitter": "res://addons/fmod/nodes/fmod.svg",
-"FmodNative": ""
+"FmodNative": "",
+"Player": ""
 }
 
 [application]

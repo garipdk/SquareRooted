@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Enemies
 
 var knockback = Vector2.ZERO
 onready var animationPlayer = $AnimationPlayer
@@ -41,6 +41,11 @@ func _physics_process(delta):
 			#velocity = move_and_slide(Vector2.ZERO)
 	else:
 		player = GameState.player
+	
+	if knockback != Vector2.ZERO:
+		is_hited = true
+	else:
+		is_hited = false
 
 func _on_Hurtbox_area_entered(area):
 	GameState._unused_warning = move_and_slide(Vector2.ZERO)
@@ -51,3 +56,13 @@ func activate_movement():
 
 func deactivate_movement():
 	movement = false
+
+func get_node_type():
+	return GameState.Enemy3
+
+
+func _on_Hitbox_Fusion_area_entered(area):
+	if spawner.fusion_area_entered(self, area):
+		get_parent().remove_child(area.get_parent())
+		area.queue_free()
+		queue_free()

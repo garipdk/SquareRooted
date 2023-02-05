@@ -1,23 +1,24 @@
-extends KinematicBody2D
-
-export (int) var max_speed = 500
-export (int) var acceleration = 750
-export (int) var roll_speed = 600
-export (int) var friction = 2000
+extends BaseLiveObjects
+class_name Player
+export (int) var max_speed = 10
+export (int) var acceleration = 15
+export (int) var roll_speed = 12
+export (int) var friction = 40
 export (float) var max_speed_knockback = 1.2
-export (int) var friction_knockback = 1000
-export (float) var cooldown = 3.0
-var velocity = Vector2.ZERO
+export (int) var friction_knockback = 20
+export (float) var cooldown_hit = 3.0
+var cooldown_h = cooldown_hit
 var roll_vector = Vector2.LEFT
-var health = 3
 enum {
 	MOVE,
 	ROLL,
 	ATTACK,
 	KNOCKBACK,
 }
+var health = 3
 var is_attacked = false
 var state = MOVE
+var velocity = Vector2.ZERO
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
@@ -30,11 +31,11 @@ func _ready():
 
 func _physics_process(delta):
 	a_delta = delta
-	if is_attacked and cooldown <= 0:
+	if is_attacked and cooldown_h <= 0:
 		health -= 1
-		cooldown = 3.0
+		cooldown_h = cooldown_hit
 	else:
-		cooldown -= delta
+		cooldown_h -= delta
 	match state:
 		MOVE:
 			move_state(delta)
@@ -66,7 +67,7 @@ func move_state(delta):
 	else:
 		animationState.travel("Idle")
 	
-	move()
+	velocity = move(velocity)
 	if Input.is_action_pressed("roll"):
 		state = ROLL 
 	if Input.is_action_pressed("attack"):
@@ -80,7 +81,7 @@ func knockback_state(delta):
 	if knockback != Vector2.ZERO:
 		animationTree.set("parameters/Run/blend_position", knockback)
 		animationTree.set("parameters/Idle/blend_position", knockback)
-		knockback = move_and_slide(knockback)
+		knockback = move(knockback)
 		animationState.travel("Run")
 	else:
 		state = MOVE
@@ -96,13 +97,11 @@ func roll_animation_finish():
 	velocity = velocity * 0.7
 	state = MOVE
 
-func move():
-	velocity = move_and_slide(velocity)
 
 func roll_state(_delta):
 	velocity = roll_vector * roll_speed
 	animationState.travel("Roll")
-	move()
+	velocity = move(velocity)
 
 func _on_Hurtbox_area_entered(area):
 	GameState._unused_warning = move_and_slide(Vector2.ZERO)
@@ -114,5 +113,11 @@ func launch_atack_sound():
 	Fmod.play_one_shot_attached("event:/SFX/Character/SFX_Sword", self)
 	
 
+func get_node_type():
+	return GameState.Player
+
+
+func get_class():
+	return "Player"
 func _on_Hurtbox_area_exited(_area):
 	is_attacked = false
