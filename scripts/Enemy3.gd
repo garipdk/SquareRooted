@@ -19,8 +19,12 @@ var velocity = Vector2.ZERO
 var player = null
 var currentDirection = Vector2.ZERO
 onready var collisionshape2d = $CollisionShape2D
-onready var node2d = $Node2D
 var isready = false
+
+var reloadTime = 3.0
+var reloading = reloadTime
+var aimingTime = 0.5
+var aiming = aimingTime
 
 func _ready():
 	animationTree.active = true
@@ -28,13 +32,16 @@ func _ready():
 	isready = true
 
 func _physics_process(delta):
+	reloading -= delta
 	knockback = knockback.move_toward(Vector2.ZERO, friction_knockback * delta)
 	if knockback != Vector2.ZERO:
+		aiming = aimingTime
 		animationTree.set("parameters/Run_en1/blend_position", knockback)
 		animationTree.set("parameters/Idle_en1/blend_position", knockback)
 		knockback = move_and_slide(knockback)
 	elif player != null:
 		if movement:
+			aiming = aimingTime
 			hitbox.knockback_vector = velocity
 			animationTree.set("parameters/Run_en1/blend_position", velocity)
 			
@@ -55,7 +62,6 @@ func _physics_process(delta):
 			
 				var idealDirection = ((global_position - player.global_position).normalized() + ((Vector2(0,1) * max(0,(10 - distBordHaut))) + (Vector2(0,-1) * max(0,(10 - distBordBas))) + (Vector2(1,0) * max(0,(10 - distBordGauche))) + (Vector2(-1,0) * max(0,(10 - distBordDroit)))).normalized()).normalized()
 				
-				
 				var repartition = delta
 				var direction = (1-repartition) * currentDirection + repartition * idealDirection
 #				var direction = idealDirection
@@ -69,7 +75,12 @@ func _physics_process(delta):
 			animationState.travel("Run_en1")
 			
 			# Tirer
-			
+			if reloading == 0:
+				aiming -= delta
+			if aiming == 0:
+				shot()
+				reloading = reloadTime
+				aiming = aimingTime
 	else:
 		player = GameState.player
 
@@ -82,3 +93,8 @@ func activate_movement():
 
 func deactivate_movement():
 	movement = false
+
+func shot():
+	var directionDuTir = player.global_position - global_position
+	Projectile(global_position,directionDuTir,10)
+
